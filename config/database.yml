@@ -5,22 +5,22 @@ default: &default
 
 development:
   <<: *default
-  username: <%= Rails.application.credentials.database[:username] %>
-  password: <%= Rails.application.credentials.database[:password] %>
+  username: <%= Rails.application.credentials[:username] %>
+  password: <%= Rails.application.credentials[:password] %>
   host: localhost
   database: app_development
 
 test:
   <<: *default
-  username: <%= Rails.application.credentials.database[:username] %>
-  password: <%= Rails.application.credentials.database[:password] %>
+  username: <%= Rails.application.credentials[:username] %>
+  password: <%= Rails.application.credentials[:password] %>
   host: localhost
   database: app_test
 
 production:
   <<: *default
-  username: <%= Rails.application.credentials.database[:username_heroku] %>
-  password: <%= Rails.application.credentials.database[:password_heroku] %>
-  host: <%= Rails.application.credentials.database[:host_heroku] %>
-  database: <%= Rails.application.credentials.database[:database_heroku] %>
-  port: <%= Rails.application.credentials.database[:port_heroku] %>
+  username: <%= Rails.application.credentials[:username_heroku] %>
+  password: <%= Rails.application.credentials[:password_heroku] %>
+  host: <%= Rails.application.credentials[:host_heroku] %>
+  database: <%= Rails.application.credentials[:database_heroku] %>
+  port: <%= Rails.application.credentials[:port_heroku] %>
