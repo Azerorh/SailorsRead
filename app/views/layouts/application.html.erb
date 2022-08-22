@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Sandbox</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="<%= articles_path %>">Articles</a>
+              </li>
+              <% if is_admin? %>
+                <li class="nav-item">
+                  <a class="nav-link" href="<%= users_path %>">Users</a>
+                </li>
+              <% end %>
+              <% if user_signed_in? %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <%= current_user.username ? "#{current_user.username}" : "Anonymous" %>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="<%= edit_user_registration_path %>">Profile</a></li>
+                    <li>
+                      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                    </li>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+            <span class="navbar-text">
+              <% if !user_signed_in? %>
+                <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
+              <% end %>
+            </span> &nbsp;&nbsp;
+            <form class="d-flex" role="search" action="search" method="GET">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      
+      <%= yield %>
+    </div>
+    <script type="text/javascript">
+
+      // Guard against double DOM loads
+      var codeExecuted = false;
+
+      document.addEventListener('DOMContentLoaded', function(e) {
+
+        // Check if importmap stuff exisits without throwing an error.
+        // Then run main code w/ guard against multiple executions.
+        if ("importmapScriptsLoaded" in window) { 
+
+          if (!codeExecuted) {
+            // Main code here
+            console.log($('#hello'));
+
+            // Don't forget to bump guard for one-time only JS execution !!
+            codeExecuted = true; 
+          };  
+        };
+
+      });
+    </script>
+  </body>
+
+</html>

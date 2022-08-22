@@ -1,0 +1,19 @@
+<div class="card text-center">
+  <div class="card-header">
+    <%= @article.title %>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= @article.text %></p>
+  </div>
+  <div class="card-footer text-muted">
+    <%= @article.created_at %>
+  </div>
+</div>
+<br><br>
+<% if user_signed_in? %>
+  <%= render partial: 'comments/form' %>
+<% else %>
+  <p><%= link_to 'Log in', new_user_session_path %> or <%= link_to 'register', new_registration_path(:user) %> to post comments</p>
+<% end %>
+
+<%= render partial: 'comments/comments' %>

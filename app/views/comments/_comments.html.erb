@@ -1,0 +1,14 @@
+<% @comments.reverse.each do |comment| %>
+
+  <div class="toast w-100" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" id="myToast">
+    <div class="toast-header">
+      <strong class="me-auto"><%= comment.author %></strong>
+      <small><%= comment.created_at %></small>
+    </div>
+    <div class="toast-body">
+      <%= comment.body %>
+    </div>
+  </div>
+  <br>
+
+<% end %>
