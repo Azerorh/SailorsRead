@@ -7,9 +7,8 @@ development:
   <<: *default
   username: <%= Rails.application.credentials.development[:username] %>
   password: <%= Rails.application.credentials.development[:password] %>
-  host: <%= Rails.application.credentials.development[:host] %>
-  database: <%= Rails.application.credentials.development[:database] %>
-  port: <%= Rails.application.credentials.development[:port] %>
+  host: localhost
+  database: app_development
 
 test:
   <<: *default
@@ -20,6 +19,8 @@ test:
 
 production:
   <<: *default
-  database: app_production
-  username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  username: <%= Rails.application.credentials[:production][:username] %>
+  password: <%= Rails.application.credentials[:production][:password] %>
+  host: <%= Rails.application.credentials[:production][:host] %>
+  database: <%= Rails.application.credentials[:production][:database] %>
+  port: <%= Rails.application.credentials[:production][:port] %>
