@@ -54,7 +54,7 @@ class ArticlesController < ApplicationController
       redirect_to articles_path
     else
       @parameter = params[:search].downcase
-      @results = Article.where('title LIKE ?', "%" + @parameter + "%")
+      @results = Article.where('title ILIKE ?', "%" + @parameter + "%")
     end
   end
 
