@@ -10,7 +10,7 @@ gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 gem "sprockets-rails"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "passenger", require: "phusion_passenger/rack_handler"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -68,6 +68,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'simplecov'
 end
 
 group :test, :development do
@@ -75,4 +76,5 @@ group :test, :development do
   gem "capybara"
   gem "shoulda-matchers"
   gem "factory_bot_rails"
+  gem 'database_cleaner'
 end

@@ -13,8 +13,6 @@ module ArticlesHelper
       else
         author.email
       end
-    else
-      'Unknown'
     end
   end
 

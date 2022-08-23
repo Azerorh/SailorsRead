@@ -16,4 +16,15 @@ feature "Contact creation" do
     click_button 'Save Contact'
     expect(page).to have_content 'Thanks!'
   end
+
+  scenario "not allows to create contact with empty fields" do
+    visit '/contacts'
+
+    fill_in :contact_email, with: ''
+    fill_in :contact_message, with: ''
+
+    click_button 'Save Contact'
+    expect(page).to have_content "Email can't be blank"
+    expect(page).to have_content "Message can't be blank"
+  end
 end
