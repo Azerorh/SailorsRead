@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+    
   get 'admin/users'
   devise_for :users
 
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments, only: [:create]
   end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

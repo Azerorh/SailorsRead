@@ -4,6 +4,7 @@
   </div>
   <div class="card-body">
     <p class="card-text"><%= @article.text %></p>
+    <iframe src="<%= @article.file_path %>" title="testPdf" height="100%" width="100%" />
   </div>
   <div class="card-footer text-muted">
     <%= @article.created_at %>
