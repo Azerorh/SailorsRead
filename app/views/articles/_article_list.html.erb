@@ -2,7 +2,12 @@
   <h4><%= article.title %><span class="text-wrap" style="float: right;margin-top: 10px;">Author: <%= author(article) %></span></h4>
 
   <p><%= article.text %></p>
-  <h6><%= link_to 'Show', article_path(article), class: 'btn btn-primary' %>
+  <h6>
+    <% if mobile_device? %>
+      <%= link_to 'Show', article.file_path, class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to 'Show', article_path(article), class: 'btn btn-primary' %>
+    <% end %>
   <% if is_admin? && user_signed_in? %> 
     <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-primary' %> 
     <%= link_to 'Delete', article_path(article), method: :delete, class: 'btn btn-primary' %> 
