@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :models
+  resources :tags
     
   get 'admin/users'
   devise_for :users

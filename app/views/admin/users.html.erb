@@ -15,7 +15,7 @@
           <td scope="row"><%= user.id %></td>
           <td><%= user.email %></td>
           <td><%= user.username %></td>
-          <td> <input type="checkbox" class="task-check" value="<%= user.id %>" <%= user.is_admin ? 'checked' : '' %>></td>
+          <td> <input type="checkbox" id="<%= user.id %><%= user.username %>" class="task-check" value="<%= user.id %>" <%= user.is_admin ? 'checked' : '' %>></td>
         </tr>
       <% end %>
     </tbody>

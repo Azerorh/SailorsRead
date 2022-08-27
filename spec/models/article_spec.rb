@@ -23,7 +23,7 @@ describe Article do
       user = create(:user)
       article = create(:article_with_comments, user_id: user.id)
 
-      expect(article.last_comment).to eq "Comment body 6"
+      expect(article.last_comment).to eq "Comment body 9"
     end
   end
 

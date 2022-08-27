@@ -1,0 +1,10 @@
+<div id="<%= dom_id tag %>">
+  <p>
+    <strong>Tag name:</strong>
+    <%= tag.name %>
+    <% tag.articles.each_with_index do |article, index| %>
+      <br><%= link_to "#{index+1}. #{article.title}", article_path(article), class: 'btn btn-success' %><br>
+    <% end %>
+  </p>
+
+</div>

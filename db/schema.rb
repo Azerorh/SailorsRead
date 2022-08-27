@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_22_234624) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_27_132833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_22_234624) do
     t.bigint "user_id"
     t.string "file_path"
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "articles_tags", id: false, force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["article_id"], name: "index_articles_tags_on_article_id"
+    t.index ["tag_id"], name: "index_articles_tags_on_tag_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -36,6 +43,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_22_234624) do
   create_table "contacts", force: :cascade do |t|
     t.string "email"
     t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "taggables", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_taggables_on_article_id"
+    t.index ["tag_id"], name: "index_taggables_on_tag_id"
+  end
+
+  create_table "taggings", id: false, force: :cascade do |t|
+    t.bigint "article_id"
+    t.bigint "tag_id"
+    t.index ["article_id"], name: "index_taggings_on_article_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,4 +86,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_22_234624) do
 
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
+  add_foreign_key "taggables", "articles"
+  add_foreign_key "taggables", "tags"
 end

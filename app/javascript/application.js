@@ -5,3 +5,4 @@
 //= require bootstrap-sprockets
 //= require scripts/toast
 //= require scripts/set_admin
+//= require scripts/jquery.prettytag

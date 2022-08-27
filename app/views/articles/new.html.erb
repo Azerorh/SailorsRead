@@ -16,6 +16,10 @@
     <div data-upload-target="progress"></div>
   </div>
   <div class="mb-3">
+    <%= f.label :tag, class: 'form-label' %>
+    <%= f.text_field :tags, class: 'form-control', value: @article.tags.map(&:name).join(',') %>
+  </div>
+  <div class="mb-3">
     <%= f.submit 'Add article', class: 'btn btn-primary' %>
   </div>
   

@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   end
 
   def new
-      
+    @article = Article.new
   end
 
   def show
@@ -15,13 +15,17 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(required_params)
+    @article = Article.new(required_params.except(:tags))
     @article.user_id = current_user.id
-    uploaded_file = params[:article][:file_path]
-    @article.file_path = "/uploads/" + uploaded_file.original_filename
+    create_or_delete_article_tags(@article, params[:article][:tags])
 
-    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
-      file.write(uploaded_file.read)
+    uploaded_file = params[:article][:file_path]
+    if uploaded_file
+      @article.file_path = "/uploads/" + uploaded_file.original_filename
+
+      File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+        file.write(uploaded_file.read)
+      end
     end
 
     if @article.save
@@ -33,11 +37,26 @@ class ArticlesController < ApplicationController
 
   def update
     set_article
-    if @article.update(required_params)
-      redirect_to @article
-    else
-      render action: 'edit'
+    uploaded_file = params[:article][:file_path]
+    create_or_delete_article_tags(@article, params[:article][:tags])
+
+    if uploaded_file
+      full_old_file_path = Rails.root.join('public', 'uploads', @article.file_path.gsub('/uploads/',''))
+      full_new_file_path = Rails.root.join('public', 'uploads', uploaded_file.original_filename)
+      File.delete(full_old_file_path)
+
+      File.open(full_new_file_path, 'wb') do |file|
+        file.write(uploaded_file.read)
+      end
+
+      @article.file_path = "/uploads/" + uploaded_file.original_filename
     end
+    
+
+    @article.title = params[:article][:title]
+    @article.text = params[:article][:text]
+    @article.save
+    redirect_to @article
   end
 
   def edit
@@ -66,6 +85,14 @@ class ArticlesController < ApplicationController
 
   private
 
+  def create_or_delete_article_tags(article, tags)
+    article.taggables.destroy_all
+    tags = tags.strip.split(',')
+    tags.each do |tag|
+      article.tags << Tag.find_or_create_by(name: tag)
+    end
+  end
+
   def set_article
     @article = Article.find(params[:id])
   end
@@ -75,7 +102,7 @@ class ArticlesController < ApplicationController
   end
 
   def required_params
-    params.require(:article).permit(:title, :text, :file_path)
+    params.require(:article).permit(:title, :text, :file_path, :tags)
   end
 
 end

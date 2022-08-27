@@ -14,4 +14,13 @@ describe 'Users list visit' do
     visit users_path
     expect(page).to have_content 'Access denied'
   end
+
+  scenario "checkbox for admin rights" do
+    user = create_admin
+    login_as(user)
+
+    visit users_path
+    page.driver.post("set_admin/" + user.id.to_s)
+    expect(page.driver.status_code).to eq 204
+  end
 end
